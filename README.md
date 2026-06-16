@@ -216,6 +216,23 @@ http://127.0.0.1:5000
 6. Final credibility assessment is displayed.
 
 ---
+# Screenshots
+
+## Home Page
+
+![Home Page](screenshots/homepage.png)
+
+---
+
+## Analysis Result
+
+![Analysis Result](screenshots/result.png)
+
+---
+
+## Fact Check Verification
+
+![Fact Check](screenshots/result1.png)
 
 ## Future Improvements
 
