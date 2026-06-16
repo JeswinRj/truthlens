@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>
+TruthLens
+</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet">
+
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="container py-5">
+
+```
+<div class="text-center mb-5">
+
+    <h1>
+
+        🛡️ TruthLens
+
+    </h1>
+
+    <h5>
+
+        AI-Assisted Fake News Detection &
+        Fact Verification Platform
+
+    </h5>
+
+</div>
+
+<!-- Prediction -->
+
+<div class="card shadow mb-4">
+
+    <div class="card-body">
+
+        <h3>
+
+            Prediction
+
+        </h3>
+
+        {% if result.prediction == "Fake News" %}
+
+            <h1 class="text-danger">
+
+                🚨 Fake News
+
+            </h1>
+
+        {% else %}
+
+            <h1 class="text-success">
+
+                ✅ Real News
+
+            </h1>
+
+        {% endif %}
+
+        <h4>
+
+            Confidence:
+            {{ result.confidence }}%
+
+        </h4>
+
+    </div>
+
+</div>
+
+<!-- Credibility -->
+
+<div class="card shadow mb-4">
+
+    <div class="card-body">
+
+        <h3>
+
+            📊 Trust Assessment
+
+        </h3>
+
+        <h1>
+
+            {{ result.credibility_score }}/100
+
+        </h1>
+
+        {% if result.credibility_score > 70 %}
+
+            <span class="badge bg-success fs-6">
+
+                Reliable
+
+            </span>
+
+        {% elif result.credibility_score > 40 %}
+
+            <span class="badge bg-warning text-dark fs-6">
+
+                Needs Verification
+
+            </span>
+
+        {% else %}
+
+            <span class="badge bg-danger fs-6">
+
+                Likely False
+
+            </span>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+<!-- Fact Checks -->
+
+<div class="card shadow mb-4">
+
+    <div class="card-body">
+
+        <h3>
+
+            🔍 Fact Check Results
+
+        </h3>
+
+        {% for fact in result.fact_checks %}
+
+        <div class="border rounded p-3 mb-3">
+
+            <p>
+
+                <strong>
+
+                    Claim
+
+                </strong>
+
+            </p>
+
+            <p>
+
+                {{ fact.claim }}
+
+            </p>
+
+            <p>
+
+                <strong>
+
+                    Publisher:
+
+                </strong>
+
+                {{ fact.publisher }}
+
+            </p>
+
+            <p>
+
+                <strong>
+
+                    Verdict:
+
+                </strong>
+
+                {% if "false" in fact.rating|lower %}
+
+                    <span class="badge bg-danger">
+
+                        {{ fact.rating }}
+
+                    </span>
+
+                {% elif "true" in fact.rating|lower %}
+
+                    <span class="badge bg-success">
+
+                        {{ fact.rating }}
+
+                    </span>
+
+                {% else %}
+
+                    <span class="badge bg-warning text-dark">
+
+                        {{ fact.rating }}
+
+                    </span>
+
+                {% endif %}
+
+            </p>
+
+            <a href="{{ fact.url }}"
+               target="_blank"
+               class="btn btn-primary">
+
+                Read Full Fact Check
+
+            </a>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+<!-- Emotions -->
+
+<div class="card shadow mb-4">
+
+    <div class="card-body">
+
+        <h3>
+
+            🧠 Emotional Analysis
+
+        </h3>
+
+        {% for emotion,score in result.top_emotions.items() %}
+
+        <div class="mb-3">
+
+            <label>
+
+                {{ emotion|capitalize }}
+
+                ({{ score }}%)
+
+            </label>
+
+            <div class="progress">
+
+                <div class="progress-bar"
+                     role="progressbar"
+                     style="width: {{ score }}%;">
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+<!-- Manipulation -->
+
+<div class="card shadow mb-4">
+
+    <div class="card-body">
+
+        <h3>
+
+            ⚠️ Manipulation Analysis
+
+        </h3>
+
+        <h1>
+
+            {{ result.manipulation_score }}
+
+        </h1>
+
+        {% if result.risk_level == "HIGH" %}
+
+            <span class="badge bg-danger fs-6">
+
+                HIGH RISK
+
+            </span>
+
+        {% elif result.risk_level == "MODERATE" %}
+
+            <span class="badge bg-warning text-dark fs-6">
+
+                MODERATE RISK
+
+            </span>
+
+        {% else %}
+
+            <span class="badge bg-success fs-6">
+
+                LOW RISK
+
+            </span>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+<!-- Explanation -->
+
+<div class="card shadow mb-4">
+
+    <div class="card-body">
+
+        <h3>
+
+            📄 AI Explanation
+
+        </h3>
+
+        <p>
+
+            {{ result.explanation }}
+
+        </p>
+
+    </div>
+
+</div>
+
+<div class="text-center">
+
+    <a href="/"
+       class="btn btn-secondary btn-lg">
+
+        Analyze Another Article
+
+    </a>
+
+</div>
+
+<footer class="text-center mt-5">
+
+    <hr>
+
+    <p>
+
+        TruthLens • Random Forest •
+        Emotion Analysis •
+        Google Fact Check API •
+        Flask
+
+    </p>
+
+</footer>
+```
+
+</div>
+
+</body>
+
+</html>
